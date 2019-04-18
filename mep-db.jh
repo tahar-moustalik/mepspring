@@ -1,0 +1,89 @@
+entity User {
+	firstName String required,
+    lastName String required,
+    email String required,
+    password String required,
+    passwordConfirm String
+}
+
+entity Profil {
+	biography String,
+    webSiteUrl String,
+    facebookUrl String,
+    youtubeUrl String,
+    paypalEmail String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Role {
+	roleName String
+}
+
+
+entity Course {
+	title String required,
+	description String required,
+    price Double required,
+    coverImage String required,
+    promoVideo String,
+    welcomeMessage String required,
+    congratsMessage String required,
+    currencyName String required
+    
+}
+
+/**
+ * The Employee entity.
+ */
+entity Chapter {
+
+	introdution String required,
+	orderNumber Integer required
+}
+
+entity Paragraph {
+	content String required,
+	orderNumber Integer required,
+	maxSalary Long
+}
+
+entity Media {
+	mediaSource String required,
+	percCompletion Integer required,
+	mediaType String required
+}
+
+entity Category {
+   categoryName String required
+}
+
+
+
+relationship OneToOne {
+	User{profil} to Profil
+}
+
+
+relationship ManyToMany {
+	User{role} to Role{user},
+    User{coursesBought} to Course{user},
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Course{category} to Category,
+    Course{chapter} to Chapter,
+    Chapter{paragraph} to Paragraph,
+    User{coursesCreated} to Course,
+    Paragraph{media} to Media
+    
+
+}
+
+
+
+// Set pagination options
+paginate Course, Category with infinite-scroll
+
+
